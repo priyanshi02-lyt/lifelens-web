@@ -1,0 +1,18 @@
+{
+  "short_name": "LifeLens",
+  "name": "LifeLens — Every Click Tells a Story",
+  "description": "Biographical data storytelling synthesis turning everyday moments into narrative clarity.",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "48x48 72x72 96x96 144x144 192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#faf8fc",
+  "theme_color": "#172b65",
+  "display": "standalone",
+  "orientation": "portrait"
+}
