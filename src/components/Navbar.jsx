@@ -32,21 +32,21 @@ export default function Navbar({ onOpenThermalSlip }) {
     <>
       {/* 1. Desktop & Mobile Header Bar */}
       <header 
-        className="sticky top-0 z-40 w-full border-b border-[#e2e0ec] bg-white/90 backdrop-blur-md transition-all"
+        className="sticky top-0 z-40 w-full border-b border-[#e2e0ec] bg-white/95 backdrop-blur-md transition-all"
         data-testid="main-header"
       >
-        <div className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between px-4 sm:px-8">
+        <div className="mx-auto flex h-[68px] sm:h-[72px] max-w-[1240px] items-center justify-between px-3 sm:px-8">
           
           {/* Brand Logo */}
           <Link 
             to="/" 
-            className="flex items-center gap-2.5 focus:outline-none"
+            className="flex items-center gap-2 focus:outline-none flex-shrink-0"
             data-testid="brand-link"
           >
-            <span className="grid size-9 place-items-center rounded-xl bg-[#172b65] text-white shadow-[0_8px_20px_rgba(23,43,101,0.22)]">
-              <Sparkles size={18} />
+            <span className="grid size-8 sm:size-9 place-items-center rounded-xl bg-[#172b65] text-white shadow-md">
+              <Sparkles size={16} />
             </span>
-            <span className="font-heading text-[22px] font-bold tracking-[-0.04em] text-[#2d1f3f]">
+            <span className="font-heading text-lg sm:text-[22px] font-bold tracking-tight text-[#2d1f3f]">
               Life<span className="text-[#5269dd]">Lens</span>
             </span>
           </Link>
@@ -98,7 +98,7 @@ export default function Navbar({ onOpenThermalSlip }) {
           </nav>
 
           {/* Right Header Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {onOpenThermalSlip && (
               <button
                 onClick={onOpenThermalSlip}
@@ -112,7 +112,7 @@ export default function Navbar({ onOpenThermalSlip }) {
 
             <Link
               to="/explore"
-              className="primary-button hidden sm:inline-flex"
+              className="primary-button hidden md:inline-flex"
               data-testid="header-cta-button"
             >
               <span>Explore Data</span>
@@ -122,11 +122,11 @@ export default function Navbar({ onOpenThermalSlip }) {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="grid size-10 place-items-center rounded-xl bg-[#f8f7fc] text-[#2d1f3f] hover:bg-[#f0eeff] md:hidden"
+              className="grid size-9 sm:size-10 place-items-center rounded-xl bg-[#f8f7fc] text-[#2d1f3f] hover:bg-[#f0eeff] md:hidden"
               aria-label="Toggle navigation menu"
               data-testid="mobile-menu-toggle"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
@@ -134,23 +134,23 @@ export default function Navbar({ onOpenThermalSlip }) {
         {/* Mobile Dropdown Drawer */}
         {mobileMenuOpen && (
           <div 
-            className="border-t border-[#e2e0ec] bg-white px-5 py-4 shadow-lg md:hidden animate-reveal-up"
+            className="border-t border-[#e2e0ec] bg-white px-4 py-4 shadow-xl md:hidden animate-reveal-up"
             data-testid="mobile-menu-drawer"
           >
-            <nav className="grid gap-1.5" aria-label="Mobile menu">
+            <nav className="grid gap-1" aria-label="Mobile menu">
               {navItems.map(({ label, to, icon: Icon, testId }) => (
                 <Link
                   key={to}
                   to={to}
                   onClick={() => setMobileMenuOpen(false)}
                   data-testid={`${testId}-drawer`}
-                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition ${
                     pathname === to 
                       ? 'bg-[#172b65] text-white' 
                       : 'text-[#536071] hover:bg-[#f2f0ff]'
                   }`}
                 >
-                  <Icon size={18} />
+                  <Icon size={17} />
                   <span>{label}</span>
                 </Link>
               ))}
@@ -161,9 +161,9 @@ export default function Navbar({ onOpenThermalSlip }) {
                     setMobileMenuOpen(false);
                     onOpenThermalSlip();
                   }}
-                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#172b65] bg-[#f0eeff] hover:bg-[#e4edff] transition text-left mt-2"
+                  className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-[#172b65] bg-[#f0eeff] hover:bg-[#e4edff] transition text-left mt-2"
                 >
-                  <Receipt size={18} />
+                  <Receipt size={17} />
                   <span>Print Thermal Summary Slip</span>
                 </button>
               )}
@@ -172,27 +172,28 @@ export default function Navbar({ onOpenThermalSlip }) {
         )}
       </header>
 
-      {/* 2. Floating Mobile Bottom Navigation Pill Dock (Reference Site Style) */}
+      {/* 2. Floating Mobile Bottom Navigation Pill Dock (Safe Area Aware & Ultra-Responsive) */}
       <div 
-        className="fixed bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-1 rounded-2xl border border-white/80 bg-white/90 p-1.5 shadow-[0_12px_40px_rgba(45,31,63,0.14)] backdrop-blur-xl md:hidden"
+        className="fixed left-1/2 z-40 flex -translate-x-1/2 items-center gap-0.5 sm:gap-1 rounded-2xl border border-white/80 bg-white/95 p-1 shadow-[0_12px_40px_rgba(45,31,63,0.18)] backdrop-blur-xl md:hidden max-w-[calc(100vw-1.5rem)]"
+        style={{ bottom: 'calc(0.85rem + env(safe-area-inset-bottom, 0px))' }}
         data-testid="mobile-bottom-navigation"
       >
-        {navItems.slice(0, 5).map(({ label, to, icon: Icon, testId }) => {
+        {navItems.map(({ label, to, icon: Icon, testId }) => {
           const isActive = pathname === to;
           return (
             <Link
               key={to}
               to={to}
               data-testid={`${testId}-bottom`}
-              className={`grid size-11 place-items-center rounded-xl transition-all ${
+              className={`grid size-9 sm:size-10 place-items-center rounded-xl transition-all ${
                 isActive 
-                  ? 'bg-[#172b65] text-white shadow-md' 
-                  : 'text-[#8390a6] hover:text-[#172b65] hover:bg-slate-100'
+                  ? 'bg-[#172b65] text-white shadow-sm' 
+                  : 'text-[#8390a6] hover:text-[#172b65] active:bg-slate-100'
               }`}
               aria-label={label}
               title={label}
             >
-              <Icon size={18} />
+              <Icon size={16} />
             </Link>
           );
         })}

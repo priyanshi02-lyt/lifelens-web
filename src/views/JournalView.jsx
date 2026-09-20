@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Sparkles, 
   Plus, 
   X, 
-  Calendar, 
-  Image as ImageIcon, 
   Check, 
-  Heart,
   BookMarked
 } from 'lucide-react';
 import PageIntro from '../components/PageIntro';
@@ -36,7 +33,7 @@ export default function JournalView() {
     e.preventDefault();
     if (!newTitle.trim()) return;
 
-    const rotates = ['-2deg', '-1deg', '1deg', '2deg'];
+    const rotates = ['-1deg', '0deg', '1deg'];
     const randomRotate = rotates[Math.floor(Math.random() * rotates.length)];
 
     const entry = {
@@ -51,7 +48,6 @@ export default function JournalView() {
     const updated = [entry, ...entries];
     setEntries(updated);
 
-    // Save to local storage
     const customOnly = updated.filter(item => item.sourceId);
     localStorage.setItem('lifelens-journal-imports', JSON.stringify(customOnly));
 
@@ -60,7 +56,7 @@ export default function JournalView() {
   };
 
   return (
-    <div className="mx-auto max-w-[1240px] px-4 py-6 sm:px-8 lg:py-10 pb-24 md:pb-12">
+    <div className="mx-auto max-w-[1240px] px-3.5 py-5 sm:px-8 lg:py-10 pb-28 md:pb-12 w-full max-w-full overflow-hidden">
       
       {/* Page Intro */}
       <PageIntro
@@ -70,10 +66,10 @@ export default function JournalView() {
         action={
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="primary-button" 
+            className="primary-button !py-2 !px-3.5 text-xs sm:text-sm" 
             data-testid="journal-new-entry-button"
           >
-            <Plus size={16} />
+            <Plus size={15} />
             <span>New entry</span>
           </button>
         }
@@ -81,30 +77,30 @@ export default function JournalView() {
 
       {/* Masonry Grid */}
       <div 
-        className="relative columns-1 gap-5 sm:columns-2 lg:columns-3"
+        className="relative columns-1 gap-4 sm:columns-2 lg:columns-3 w-full max-w-full"
         data-testid="journal-masonry-grid"
       >
         {entries.map((entry, idx) => (
           <article
             key={idx}
-            className="mb-5 break-inside-avoid overflow-hidden rounded-[24px] bg-white p-3.5 shadow-[0_8px_30px_rgba(45,31,63,0.06)] ring-1 ring-[#ece9f3] transition-all hover:scale-[1.02] hover:shadow-lg"
+            className="mb-4 break-inside-avoid overflow-hidden rounded-[22px] bg-white p-3 shadow-xs ring-1 ring-[#ece9f3] transition-all hover:shadow-md w-full"
             style={{ transform: `rotate(${entry.rotate || '0deg'})` }}
             data-testid={`journal-entry-card-${idx + 1}`}
           >
             {entry.image ? (
               <div 
-                className="h-[190px] rounded-[18px] bg-cover bg-center overflow-hidden mb-3"
+                className="h-[180px] rounded-[16px] bg-cover bg-center overflow-hidden mb-2.5"
                 style={{ backgroundImage: `url(${entry.image})` }}
               />
             ) : (
               <div 
-                className="flex min-h-[170px] items-center justify-center rounded-[18px] p-6 text-center mb-3"
+                className="flex min-h-[150px] items-center justify-center rounded-[16px] p-5 text-center mb-2.5"
                 style={{ backgroundColor: entry.color || '#fff1cf' }}
               >
                 <div>
-                  <Sparkles className="mx-auto mb-3 text-[#a1852f]" size={20} />
+                  <Sparkles className="mx-auto mb-2 text-[#a1852f]" size={18} />
                   <p 
-                    className="font-heading text-xl font-bold leading-tight text-[#655523]"
+                    className="font-heading text-lg font-bold leading-tight text-[#655523]"
                     data-testid={`journal-entry-title-${idx + 1}`}
                   >
                     “{entry.title}”
@@ -113,9 +109,9 @@ export default function JournalView() {
               </div>
             )}
 
-            <div className="flex items-center justify-between px-2 pt-1 pb-1 text-xs text-slate-400">
-              <span className="font-semibold text-slate-700">{entry.title}</span>
-              <span>{entry.date}</span>
+            <div className="flex items-center justify-between px-1.5 pt-1 text-xs text-slate-400">
+              <span className="font-semibold text-slate-700 truncate max-w-[200px]">{entry.title}</span>
+              <span className="text-[11px]">{entry.date}</span>
             </div>
           </article>
         ))}
@@ -128,39 +124,39 @@ export default function JournalView() {
           onClick={() => setIsModalOpen(false)}
         >
           <div 
-            className="relative w-full max-w-md rounded-[28px] bg-white p-6 shadow-2xl ring-1 ring-[#ece9f3]"
+            className="relative w-full max-w-md rounded-[24px] bg-white p-5 sm:p-6 shadow-2xl ring-1 ring-[#ece9f3]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3.5">
               <div className="eyebrow text-[#5269dd]">
-                <BookMarked size={14} />
+                <BookMarked size={13} />
                 <span>NEW REFLECTION</span>
               </div>
               <button 
                 onClick={() => setIsModalOpen(false)}
-                className="grid size-8 place-items-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition"
+                className="grid size-7 place-items-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition"
               >
-                <X size={16} />
+                <X size={15} />
               </button>
             </div>
 
-            <form onSubmit={handleAddEntry} className="space-y-4">
+            <form onSubmit={handleAddEntry} className="space-y-3.5">
               <div>
-                <label className="text-xs font-bold text-slate-600 block mb-1.5">
+                <label className="text-xs font-bold text-slate-600 block mb-1">
                   What's on your mind?
                 </label>
                 <textarea
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder="A quiet moment, an insight, or a thought to hold onto..."
-                  rows={4}
-                  className="w-full rounded-2xl bg-[#faf9fd] p-3 text-sm text-[#2d1f3f] placeholder-slate-400 outline-none transition focus:bg-white focus:ring-2 focus:ring-[#5269dd]/20 border border-slate-200 resize-none"
+                  rows={3}
+                  className="w-full rounded-2xl bg-[#faf9fd] p-3 text-xs sm:text-sm text-[#2d1f3f] placeholder-slate-400 outline-none transition focus:bg-white focus:ring-2 focus:ring-[#5269dd]/20 border border-slate-200 resize-none"
                   autoFocus
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-600 block mb-2">
+                <label className="text-xs font-bold text-slate-600 block mb-1.5">
                   Sticky Note Color
                 </label>
                 <div className="flex gap-2">
@@ -169,30 +165,30 @@ export default function JournalView() {
                       key={c}
                       type="button"
                       onClick={() => setSelectedColor(c)}
-                      className="size-8 rounded-full border-2 transition flex items-center justify-center"
+                      className="size-7 rounded-full border-2 transition flex items-center justify-center"
                       style={{ 
                         backgroundColor: c,
                         borderColor: selectedColor === c ? '#172b65' : 'transparent' 
                       }}
                     >
-                      {selectedColor === c && <Check size={14} className="text-slate-800" />}
+                      {selectedColor === c && <Check size={12} className="text-slate-800" />}
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-3 flex gap-2">
+              <div className="pt-2 flex gap-2">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="secondary-button flex-1"
+                  className="secondary-button flex-1 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={!newTitle.trim()}
-                  className="primary-button flex-1 disabled:opacity-50"
+                  className="primary-button flex-1 disabled:opacity-50 text-xs"
                 >
                   Save Entry
                 </button>

@@ -16,18 +16,42 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  html, body, #root {
+  html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+
+  body {
     background-color: #faf8fc;
     color: #2d1f3f;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    overflow-x: hidden;
-    max-width: 100vw;
-    width: 100%;
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  #root {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    min-height: 100vh;
   }
 
   h1, h2, h3, .font-heading {
     font-family: 'Playfair Display', Georgia, serif;
   }
+}
+
+/* Custom Scrollbar Utility */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 /* Replicated Custom Classes from Reference Site */
@@ -45,16 +69,20 @@
 .section-title {
   letter-spacing: -0.045em;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.1;
 }
 
 .section-subtitle {
   letter-spacing: -0.04em;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
   font-weight: 700;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .primary-button, .secondary-button {
@@ -62,30 +90,34 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.78rem 1.1rem;
+  padding: 0.72rem 1.1rem;
   font-size: 0.78rem;
   font-weight: 800;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-  display: inline-flex;
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.primary-button:not(.hidden), .secondary-button:not(.hidden) {
+  display: inline-flex;
 }
 
 .primary-button {
   color: #fff;
   background: #172b65;
-  box-shadow: 0 9px 20px rgba(23, 43, 101, 0.16);
+  box-shadow: 0 8px 18px rgba(23, 43, 101, 0.16);
 }
 
 .primary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 13px 25px rgba(23, 43, 101, 0.22);
+  box-shadow: 0 12px 24px rgba(23, 43, 101, 0.22);
 }
 
 .secondary-button {
   color: #445064;
   background: #fff;
   border: 1px solid #e6e3ee;
-  box-shadow: 0 3px 14px rgba(45, 31, 63, 0.05);
+  box-shadow: 0 3px 12px rgba(45, 31, 63, 0.05);
 }
 
 .secondary-button:hover {
@@ -99,11 +131,12 @@
   background: #fff;
   border: 1px solid #e6e3ee;
   border-radius: 999px;
-  padding: 0.58rem 0.95rem;
+  padding: 0.5rem 0.9rem;
   font-size: 0.72rem;
   font-weight: 700;
   transition: all 0.2s;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .filter-chip:hover {
@@ -151,8 +184,8 @@
   border-radius: 13px;
   align-items: center;
   gap: 0.5rem;
-  min-width: 130px;
-  padding: 0.7rem 0.8rem;
+  min-width: 120px;
+  padding: 0.65rem 0.75rem;
   font-size: 0.62rem;
   font-weight: 800;
   animation: 4.5s ease-in-out infinite float-note;
@@ -160,6 +193,7 @@
   position: absolute;
   box-shadow: 0 12px 28px rgba(65, 72, 135, 0.12);
   z-index: 10;
+  pointer-events: none;
 }
 
 .floating-note:nth-child(2) {
@@ -176,13 +210,26 @@
 }
 
 .dashboard-landscape {
-  width: 60%;
-  height: 220px;
+  width: 55%;
+  height: 210px;
   position: absolute;
   bottom: 0;
-  right: 2%;
+  right: 0;
   overflow: hidden;
   pointer-events: none;
+  contain: paint;
+}
+
+@media (max-width: 640px) {
+  .dashboard-landscape {
+    width: 160px;
+    height: 120px;
+    opacity: 0.15;
+    right: -10px;
+    bottom: -10px;
+    transform: scale(0.7);
+    transform-origin: bottom right;
+  }
 }
 
 .landscape-sun {
@@ -192,8 +239,8 @@
   height: 44px;
   animation: 5s ease-in-out infinite breathe;
   position: absolute;
-  top: 8%;
-  right: 20%;
+  top: 10%;
+  right: 22%;
 }
 
 .landscape-mountain {
@@ -203,27 +250,28 @@
   position: absolute;
   bottom: -45px;
   transform: rotate(45deg);
+  contain: paint;
 }
 
 .landscape-mountain-back {
   background: #9faae9;
-  right: -10%;
+  right: -5%;
 }
 
 .landscape-mountain-front {
   background: #6d83d0;
   bottom: -75px;
-  left: 7%;
+  left: 10%;
 }
 
 .landscape-river {
   background: #f7f5ff;
   border-radius: 50%;
-  width: 42px;
+  width: 40px;
   height: 260px;
   position: absolute;
   bottom: -15px;
-  left: 39%;
+  left: 42%;
   transform: rotate(35deg);
   box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.18);
 }
@@ -259,13 +307,14 @@
 /* Phone / Mobile specific view refinements */
 @media (max-width: 640px) {
   .dashboard-landscape {
-    opacity: 0.85;
-    width: 65%;
-    right: 0;
-    height: 160px;
-    overflow: hidden;
+    opacity: 0.18 !important;
+    width: 48% !important;
+    right: -10px !important;
+    height: 140px !important;
+    overflow: hidden !important;
+    contain: paint !important;
   }
   .floating-note {
-    transform: scale(0.82);
+    display: none !important;
   }
 }
